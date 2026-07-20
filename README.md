@@ -127,9 +127,13 @@ architecture and runtime identifier. Common causes:
 
 ## Building from source
 
-Build the native bridge for the current platform, stage it, then build the
-managed side (`<rid>` is the runtime identifier, e.g. `win-x64`, `linux-arm64`,
-`osx-arm64`):
+With [just](https://github.com/casey/just) installed, `just build` runs the
+whole sequence below (submodules, native build, staging, tests) for the
+current platform.
+
+Manually: build the native bridge for the current platform, stage it, then
+build the managed side (`<rid>` is the runtime identifier, e.g. `win-x64`,
+`linux-arm64`, `osx-arm64`):
 
 ```
 git clone --recurse-submodules https://github.com/Aspenini/zarchive-cs.git
