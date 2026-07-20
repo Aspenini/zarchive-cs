@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>ZArchive</AssemblyName>
+    <RootNamespace>ZArchive</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Packaging">
+    <PackageId>ZArchive.NET</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>ZArchive.NET contributors</Authors>
+    <Description>Idiomatic .NET bindings for the ZArchive archive format (.zar/.wua). Uses the official ZArchive C++ implementation internally; consumers need no C++ compiler, CMake, or zstd installation. ZArchive.NET is an independent .NET binding for the ZArchive library and is not an official upstream project.</Description>
+    <PackageLicenseExpression>MIT-0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>zarchive;zar;wua;archive;zstd;compression;interop</PackageTags>
+    <PackageProjectUrl>https://github.com/Aspenini/zarchive-cs</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Aspenini/zarchive-cs</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <!-- SourceLink needs a git remote; only enable it in CI so local packs work
+       in checkouts without one. -->
+  <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' != 'true'">
+    <EnableSourceLink>false</EnableSourceLink>
+  </PropertyGroup>
+
+  <ItemGroup Label="Package docs and notices">
+    <None Include="$(RepoRoot)README.md" Pack="true" PackagePath="/" Visible="false" />
+    <None Include="$(RepoRoot)THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="/" Visible="false" Condition="Exists('$(RepoRoot)THIRD-PARTY-NOTICES.md')" />
+  </ItemGroup>
+
+  <!-- Native bridge binaries staged by the native build (see native/CMakeLists.txt)
+       under artifacts/native/<rid>/. Every staged RID is packed; the RID matching
+       the current SDK is also copied next to the assembly for local runs/tests. -->
+  <ItemGroup Label="Native assets">
+    <None Include="$(RepoRoot)artifacts\native\**\*" Pack="true" PackagePath="runtimes/%(RecursiveDir)native/%(Filename)%(Extension)" Visible="false" />
+    <None Include="$(RepoRoot)artifacts\native\$(NETCoreSdkRuntimeIdentifier)\*" CopyToOutputDirectory="PreserveNewest" Link="%(Filename)%(Extension)" Visible="false" />
+  </ItemGroup>
+
+</Project>

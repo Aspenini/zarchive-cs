@@ -1,0 +1,6 @@
+[submodule "native/vendor/ZArchive"]
+	path = native/vendor/ZArchive
+	url = https://github.com/Exzap/ZArchive.git
+[submodule "native/vendor/zstd"]
+	path = native/vendor/zstd
+	url = https://github.com/facebook/zstd.git

@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/CreateArchive/CreateArchive.csproj" />
+    <Project Path="samples/ExtractArchive/ExtractArchive.csproj" />
+    <Project Path="samples/ListArchive/ListArchive.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/ZArchive/ZArchive.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ZArchive.Tests/ZArchive.Tests.csproj" />
+  </Folder>
+</Solution>
