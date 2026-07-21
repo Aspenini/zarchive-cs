@@ -16,3 +16,12 @@ build:
     cmake --build native/build/{{rid}} --config Release
     cmake --install native/build/{{rid}} --config Release --prefix artifacts/native/{{rid}}
     dotnet test ZArchive.NET.slnx -c Release
+
+# Cross-compile the native bridge for osx-x64 (Intel) from an arm64 Mac.
+# Stages to artifacts/native/osx-x64; does not run tests (x64 dylib cannot
+# load in a native arm64 process).
+build-osx-x64:
+    git submodule update --init --recursive
+    cmake -S native -B native/build/osx-x64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=x86_64
+    cmake --build native/build/osx-x64 --config Release
+    cmake --install native/build/osx-x64 --config Release --prefix artifacts/native/osx-x64
